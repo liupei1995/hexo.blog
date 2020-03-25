@@ -3,11 +3,12 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
+title: 前端杂货店
 subtitle:
-description:
-author: John Doe
-language:
+description: 偶尔羡慕情侣，偶尔庆幸自由
+keywords:
+author: Liu Pei
+language: zh-Hans
 timezone:
 
 # URL
