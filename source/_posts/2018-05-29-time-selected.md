@@ -111,8 +111,7 @@ let dayScroll = new IScroll('#day_wrapper')
 
 上面代码撸完以后，浏览器运行，就可以看到如下截图了
 
-<!-- {% asset_img 1.png %} -->
-![Image text](./2018-05-29-time-selected/1.png)
+{% asset_img 1.png %}
 
 可以顺畅的滚动了，难道这就结束了？no，骚年你还是太年轻了
 
