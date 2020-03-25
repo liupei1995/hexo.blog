@@ -20,31 +20,33 @@
     var CONFIG = {"hostname":"liupei1995.github.io","root":"/hexo.blog/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="偶尔羡慕情侣，偶尔庆幸自由">
-<meta property="og:type" content="website">
-<meta property="og:title" content="前端杂货店">
-<meta property="og:url" content="https://liupei1995.github.io/hexo.blog/index.html">
+  <meta name="description" content="博主最近在学习Vue框架，对其中的响应式原理感觉非常有趣，于是上网查了各种资料，总结了这篇文章，希望对大家有帮助 一、Vue的响应式原理其实大家上网翻阅资料也知道Vue的响应式原理其实是通过数据劫持来达到监听数据的目的。说到数据劫持就不能不提到Object.defineProperty方法了。这个方法的具体作用就是使属性变得可观测，属性变得可观测以后，如何反映到视图上，就是我们需要研究的内容了。">
+<meta name="keywords" content="VUE,JS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="依赖收集和响应式原理">
+<meta property="og:url" content="https://liupei1995.github.io/hexo.blog/2018/04/03/2018-04-03-response-principle/index.html">
 <meta property="og:site_name" content="前端杂货店">
-<meta property="og:description" content="偶尔羡慕情侣，偶尔庆幸自由">
+<meta property="og:description" content="博主最近在学习Vue框架，对其中的响应式原理感觉非常有趣，于是上网查了各种资料，总结了这篇文章，希望对大家有帮助 一、Vue的响应式原理其实大家上网翻阅资料也知道Vue的响应式原理其实是通过数据劫持来达到监听数据的目的。说到数据劫持就不能不提到Object.defineProperty方法了。这个方法的具体作用就是使属性变得可观测，属性变得可观测以后，如何反映到视图上，就是我们需要研究的内容了。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-03-25T07:53:49.044Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="前端杂货店">
-<meta name="twitter:description" content="偶尔羡慕情侣，偶尔庆幸自由">
+<meta name="twitter:title" content="依赖收集和响应式原理">
+<meta name="twitter:description" content="博主最近在学习Vue框架，对其中的响应式原理感觉非常有趣，于是上网查了各种资料，总结了这篇文章，希望对大家有帮助 一、Vue的响应式原理其实大家上网翻阅资料也知道Vue的响应式原理其实是通过数据劫持来达到监听数据的目的。说到数据劫持就不能不提到Object.defineProperty方法了。这个方法的具体作用就是使属性变得可观测，属性变得可观测以后，如何反映到视图上，就是我们需要研究的内容了。">
 
-<link rel="canonical" href="https://liupei1995.github.io/hexo.blog/">
+<link rel="canonical" href="https://liupei1995.github.io/hexo.blog/2018/04/03/2018-04-03-response-principle/">
 
 
 <script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
-    isHome : true,
-    isPost : false,
+    isHome : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>前端杂货店</title>
+  <title>依赖收集和响应式原理 | 前端杂货店</title>
   
 
 
@@ -162,77 +164,11 @@
         <div class="content-wrap">
           
 
-          <div class="content index">
+          <div class="content post">
             
 
   <div class="posts-expand">
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://liupei1995.github.io/hexo.blog/2020/03/25/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/hexo.blog/images/avatar.jpg">
-      <meta itemprop="name" content="Liu Pei">
-      <meta itemprop="description" content="偶尔羡慕情侣，偶尔庆幸自由">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="前端杂货店">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/hexo.blog/2020/03/25/hello-world/" class="post-title-link" itemprop="url">Hello World</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2020-03-25 07:53:49" itemprop="dateCreated datePublished" datetime="2020-03-25T07:53:49+00:00">2020-03-25</time>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
       
-          <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-        
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
@@ -248,10 +184,9 @@
       <meta itemprop="name" content="前端杂货店">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/hexo.blog/2018/04/03/2018-04-03-response-principle/" class="post-title-link" itemprop="url">依赖收集和响应式原理</a>
-        </h2>
+        <h1 class="post-title" itemprop="name headline">
+          依赖收集和响应式原理
+        </h1>
 
         <div class="post-meta">
             <span class="post-meta-item">
@@ -290,7 +225,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>博主最近在学习Vue框架，对其中的响应式原理感觉非常有趣，于是上网查了各种资料，总结了这篇文章，希望对大家有帮助</p>
+        <p>博主最近在学习Vue框架，对其中的响应式原理感觉非常有趣，于是上网查了各种资料，总结了这篇文章，希望对大家有帮助</p>
 <h2 id="一、Vue的响应式原理"><a href="#一、Vue的响应式原理" class="headerlink" title="一、Vue的响应式原理"></a>一、Vue的响应式原理</h2><p>其实大家上网翻阅资料也知道Vue的响应式原理其实是通过数据劫持来达到监听数据的目的。说到数据劫持就不能不提到<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty" target="_blank" rel="noopener">Object.defineProperty</a>方法了。<br>这个方法的具体作用就是使属性变得可观测，属性变得可观测以后，如何反映到视图上，就是我们需要研究的内容了。</p>
 <h2 id="二、监听属性"><a href="#二、监听属性" class="headerlink" title="二、监听属性"></a>二、监听属性</h2><p>首先，我们定义一个数据对象：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const person = &#123;</span><br><span class="line">  sex: <span class="string">'女'</span>,</span><br><span class="line">  age: 30</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>我们定义了一个30岁的女人。现在我们可以通过person.sex和person.age读取属性。但是当这个数据被修改时，我们却不知道。这时候就要用到Object.defineProperty方法了。那到底应该如何做呢？看下面代码<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> person = &#123;&#125;</span><br><span class="line"><span class="built_in">let</span> val = 60</span><br><span class="line">Object.defineProperty(person, <span class="string">'age'</span>, &#123;</span><br><span class="line">  <span class="function"><span class="title">get</span></span> () &#123;</span><br><span class="line">    console.log(<span class="string">'age is getting'</span>)</span><br><span class="line">	  <span class="built_in">return</span> val</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="built_in">set</span> (newVal) &#123;</span><br><span class="line">    console.log(<span class="string">'age is setting'</span>)</span><br><span class="line">    val = newVal</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
@@ -324,24 +259,37 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> ObserveProperty (obj, key, val) &#123;</span><br><span class="line">  const deps = []</span><br><span class="line">  Object.defineProperty(obj, key, &#123;</span><br><span class="line">    <span class="function"><span class="title">get</span></span> () &#123;</span><br><span class="line">      console.log(`<span class="variable">$&#123;key&#125;</span> is getting`)</span><br><span class="line">      <span class="keyword">if</span>(Dep.target &amp;&amp; deps.indexOf(Dep.target) === -1) &#123;</span><br><span class="line">        deps.push(Dep.target)</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="built_in">return</span> val</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="built_in">set</span> (newVal) &#123;</span><br><span class="line">      console.log(`<span class="variable">$&#123;key&#125;</span> is setting`)</span><br><span class="line">      val = newVal</span><br><span class="line">      deps.forEach(dep =&gt; &#123;</span><br><span class="line">        dep()</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> ObserveObj (obj) &#123;</span><br><span class="line">  const keys = Object.keys(obj)</span><br><span class="line">  keys.forEach((key) =&gt; &#123;</span><br><span class="line">    ObserveProperty(obj, key, obj[key])</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="built_in">return</span> obj</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">let</span> person = ObserveObj(&#123;</span><br><span class="line">  sex: <span class="string">'女'</span>,</span><br><span class="line">  age: 30</span><br><span class="line">&#125;)</span><br><span class="line">    </span><br><span class="line">const Dep = &#123;</span><br><span class="line">  target: null</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> onComputedUpdate (val) &#123;</span><br><span class="line">  console.log(`我的类型是: <span class="variable">$&#123;val&#125;</span>`)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> watcher (obj, key, fn) &#123;</span><br><span class="line">  const onDepUpdated = () =&gt; &#123;</span><br><span class="line">    const val = fn()</span><br><span class="line">    onComputedUpdate(val)</span><br><span class="line">  &#125;</span><br><span class="line">  Object.defineProperty(obj, key, &#123;</span><br><span class="line">    <span class="function"><span class="title">get</span></span> () &#123;</span><br><span class="line">      Dep.target = onDepUpdated</span><br><span class="line">      const val = fn()</span><br><span class="line">      Dep.target = null</span><br><span class="line">      <span class="built_in">return</span> val</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">set</span></span> () &#123;</span><br><span class="line">      console.log(<span class="string">'computed property is not set'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">watcher(person, <span class="string">'type'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="built_in">return</span> person.age &gt; 18 ? <span class="string">'御姐'</span> : <span class="string">'萝莉'</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="https://zhuanlan.zhihu.com/p/29318017" target="_blank" rel="noopener">深入浅出Vue基于”依赖收集”的响应式原理</a><br><a href="https://segmentfault.com/a/1190000006599500" target="_blank" rel="noopener">剖析Vue原理&amp;实现双向绑定MVVM</a><br><a href="https://github.com/DDFE/DDFE-blog/issues/7" target="_blank" rel="noopener">Vue源码解析</a></p>
 
-      
     </div>
 
     
     
     
+
       <footer class="post-footer">
-        <div class="post-eof"></div>
+          <div class="post-tags">
+              <a href="/hexo.blog/tags/VUE/" rel="tag"># VUE</a>
+              <a href="/hexo.blog/tags/JS/" rel="tag"># JS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/hexo.blog/2020/03/25/hello-world/" rel="next" title="Hello World">
+      Hello World <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
+    
   </article>
   
   
   
 
   </div>
-
-  
-
 
 
           </div>
@@ -392,6 +340,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、Vue的响应式原理"><span class="nav-number">1.</span> <span class="nav-text">一、Vue的响应式原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、监听属性"><span class="nav-number">2.</span> <span class="nav-text">二、监听属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、计算属性"><span class="nav-number">3.</span> <span class="nav-text">三、计算属性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、依赖收集"><span class="nav-number">4.</span> <span class="nav-text">四、依赖收集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#五、尾声"><span class="nav-number">5.</span> <span class="nav-text">五、尾声</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文献"><span class="nav-number">6.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
