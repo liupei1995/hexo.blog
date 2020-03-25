@@ -17,7 +17,7 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"liupei1995.github.io","root":"/hexo.blog/","scheme":"Pisces","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+    var CONFIG = {"hostname":"liupei1995.github.io","root":"/hexo.blog/","scheme":"Muse","version":"7.7.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
   <meta name="description" content="博主最近在学习Vue框架，对其中的响应式原理感觉非常有趣，于是上网查了各种资料，总结了这篇文章，希望对大家有帮助 一、Vue的响应式原理其实大家上网翻阅资料也知道Vue的响应式原理其实是通过数据劫持来达到监听数据的目的。说到数据劫持就不能不提到Object.defineProperty方法了。这个方法的具体作用就是使属性变得可观测，属性变得可观测以后，如何反映到视图上，就是我们需要研究的内容了。">
@@ -28,7 +28,7 @@
 <meta property="og:site_name" content="前端杂货店">
 <meta property="og:description" content="博主最近在学习Vue框架，对其中的响应式原理感觉非常有趣，于是上网查了各种资料，总结了这篇文章，希望对大家有帮助 一、Vue的响应式原理其实大家上网翻阅资料也知道Vue的响应式原理其实是通过数据劫持来达到监听数据的目的。说到数据劫持就不能不提到Object.defineProperty方法了。这个方法的具体作用就是使属性变得可观测，属性变得可观测以后，如何反映到视图上，就是我们需要研究的内容了。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-25T08:20:12.223Z">
+<meta property="og:updated_time" content="2020-03-25T08:36:18.994Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="依赖收集和响应式原理">
 <meta name="twitter:description" content="博主最近在学习Vue框架，对其中的响应式原理感觉非常有趣，于是上网查了各种资料，总结了这篇文章，希望对大家有帮助 一、Vue的响应式原理其实大家上网翻阅资料也知道Vue的响应式原理其实是通过数据劫持来达到监听数据的目的。说到数据劫持就不能不提到Object.defineProperty方法了。这个方法的具体作用就是使属性变得可观测，属性变得可观测以后，如何反映到视图上，就是我们需要研究的内容了。">
@@ -202,7 +202,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-25 08:20:12" itemprop="dateModified" datetime="2020-03-25T08:20:12+00:00">2020-03-25</time>
+                <time title="修改时间：2020-03-25 08:36:18" itemprop="dateModified" datetime="2020-03-25T08:36:18+00:00">2020-03-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -407,7 +407,7 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Liu Pei</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://muse.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
   </div>
 
         
@@ -428,7 +428,7 @@
   <script src="/hexo.blog/lib/velocity/velocity.min.js"></script>
   <script src="/hexo.blog/lib/velocity/velocity.ui.min.js"></script>
 <script src="/hexo.blog/js/utils.js"></script><script src="/hexo.blog/js/motion.js"></script>
-<script src="/hexo.blog/js/schemes/pisces.js"></script>
+<script src="/hexo.blog/js/schemes/muse.js"></script>
 <script src="/hexo.blog/js/next-boot.js"></script>
 
 
