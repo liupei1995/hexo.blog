@@ -28,10 +28,14 @@
 <meta property="og:site_name" content="前端杂货店">
 <meta property="og:description" content="最近博主在做一个项目的时候，需要一个移动端的日期选择器，在网上没有找到自己想要的插件，只能自己去撸了。 其实撸起来的时候发现也不是很麻烦，只是有几点需要注意一下。 废话不多说，直接上代码。 等等等等，上代码之前差点忘告诉大家，先去下个iScroll.js HTML代码12345678910111213141516171819202122232425262728293031323334&amp;lt;div">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-25T08:36:18.994Z">
+<meta property="og:image" content="https://liupei1995.github.io/hexo.blog/2018/05/29/2018-05-29-time-selected/1.png">
+<meta property="og:image" content="https://liupei1995.github.io/hexo.blog/2018/05/29/2018-05-29-time-selected/2.png">
+<meta property="og:image" content="https://liupei1995.github.io/hexo.blog/2018/05/29/2018-05-29-time-selected/3.png">
+<meta property="og:updated_time" content="2020-03-25T09:32:24.381Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="基于iScroll的移动端日期选择器">
 <meta name="twitter:description" content="最近博主在做一个项目的时候，需要一个移动端的日期选择器，在网上没有找到自己想要的插件，只能自己去撸了。 其实撸起来的时候发现也不是很麻烦，只是有几点需要注意一下。 废话不多说，直接上代码。 等等等等，上代码之前差点忘告诉大家，先去下个iScroll.js HTML代码12345678910111213141516171819202122232425262728293031323334&amp;lt;div">
+<meta name="twitter:image" content="https://liupei1995.github.io/hexo.blog/2018/05/29/2018-05-29-time-selected/1.png">
 
 <link rel="canonical" href="https://liupei1995.github.io/hexo.blog/2018/05/29/2018-05-29-time-selected/">
 
@@ -202,7 +206,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-25 08:36:18" itemprop="dateModified" datetime="2020-03-25T08:36:18+00:00">2020-03-25</time>
+                <time title="修改时间：2020-03-25 09:32:24" itemprop="dateModified" datetime="2020-03-25T09:32:24+00:00">2020-03-25</time>
               </span>
 
           
@@ -225,14 +229,13 @@
 <h2 id="JS代码"><a href="#JS代码" class="headerlink" title="JS代码"></a>JS代码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> yearScroll = new IScroll(<span class="string">'#year_wrapper'</span>)</span><br><span class="line"><span class="built_in">let</span> monthScroll = new IScroll(<span class="string">'#month_wrapper'</span>)</span><br><span class="line"><span class="built_in">let</span> dayScroll = new IScroll(<span class="string">'#day_wrapper'</span>)</span><br></pre></td></tr></table></figure>
 <p>看完上面代码以后，大家可能有个疑问，为啥ul列表有两个空值，这是因为我们的选择区域距离上下有40px的距离，如果不增加两个空值的话，列表的第一个值和第二个值就滚不到选择区域了。</p>
 <p>上面代码撸完以后，浏览器运行，就可以看到如下截图了</p>
-<!--  –&gt;
-<p><img src="./2018-05-29-time-selected/1.png" alt="Image text"></p>
+<img src="/hexo.blog/2018/05/29/2018-05-29-time-selected/1.png">
 <p>可以顺畅的滚动了，难道这就结束了？no，骚年你还是太年轻了</p>
 <p>其实滚动的时候我们可以发现几个问题</p>
 <blockquote>
 <p>NO.1 滚动的时候没有对齐，上图….图……….图</p>
 </blockquote>
-
+<img src="/hexo.blog/2018/05/29/2018-05-29-time-selected/2.png">
 <p>WTF！！！！这样怎么办，难道要通过一系列的计算来让它对齐？no..no..no,骚年看好了，出来吧，神龙</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> yearScroll = new IScroll(<span class="string">'#year_wrapper'</span>,&#123;</span><br><span class="line">	snap: <span class="string">'li'</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <p>加上这个以后，我们发现问题解决了。</p>
@@ -249,8 +252,8 @@
 <p>至于这个属性的作用，嘿嘿嘿，自己百度吧！！！！</p>
 <p>到此，一个移动端的日期选择器就完成了。</p>
 <p>博主的分享就到这了，喜欢的话欢迎来star。</p>
+<img src="/hexo.blog/2018/05/29/2018-05-29-time-selected/3.png">
 
--->
     </div>
 
     
@@ -352,7 +355,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/hexo.blog/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>

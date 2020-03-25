@@ -28,10 +28,13 @@
 <meta property="og:site_name" content="前端杂货店">
 <meta property="og:description" content="博主最近在学习Vue框架，对其中的响应式原理感觉非常有趣，于是上网查了各种资料，总结了这篇文章，希望对大家有帮助 一、Vue的响应式原理其实大家上网翻阅资料也知道Vue的响应式原理其实是通过数据劫持来达到监听数据的目的。说到数据劫持就不能不提到Object.defineProperty方法了。这个方法的具体作用就是使属性变得可观测，属性变得可观测以后，如何反映到视图上，就是我们需要研究的内容了。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-03-25T08:36:18.994Z">
+<meta property="og:image" content="https://liupei1995.github.io/hexo.blog/2018/04/03/2018-04-03-response-principle/1.png">
+<meta property="og:image" content="https://liupei1995.github.io/hexo.blog/2018/04/03/2018-04-03-response-principle/2.png">
+<meta property="og:updated_time" content="2020-03-25T09:32:24.381Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="依赖收集和响应式原理">
 <meta name="twitter:description" content="博主最近在学习Vue框架，对其中的响应式原理感觉非常有趣，于是上网查了各种资料，总结了这篇文章，希望对大家有帮助 一、Vue的响应式原理其实大家上网翻阅资料也知道Vue的响应式原理其实是通过数据劫持来达到监听数据的目的。说到数据劫持就不能不提到Object.defineProperty方法了。这个方法的具体作用就是使属性变得可观测，属性变得可观测以后，如何反映到视图上，就是我们需要研究的内容了。">
+<meta name="twitter:image" content="https://liupei1995.github.io/hexo.blog/2018/04/03/2018-04-03-response-principle/1.png">
 
 <link rel="canonical" href="https://liupei1995.github.io/hexo.blog/2018/04/03/2018-04-03-response-principle/">
 
@@ -202,7 +205,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-03-25 08:36:18" itemprop="dateModified" datetime="2020-03-25T08:36:18+00:00">2020-03-25</time>
+                <time title="修改时间：2020-03-25 09:32:24" itemprop="dateModified" datetime="2020-03-25T09:32:24+00:00">2020-03-25</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -230,7 +233,7 @@
 <h2 id="二、监听属性"><a href="#二、监听属性" class="headerlink" title="二、监听属性"></a>二、监听属性</h2><p>首先，我们定义一个数据对象：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const person = &#123;</span><br><span class="line">  sex: <span class="string">'女'</span>,</span><br><span class="line">  age: 30</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>我们定义了一个30岁的女人。现在我们可以通过person.sex和person.age读取属性。但是当这个数据被修改时，我们却不知道。这时候就要用到Object.defineProperty方法了。那到底应该如何做呢？看下面代码<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">let</span> person = &#123;&#125;</span><br><span class="line"><span class="built_in">let</span> val = 60</span><br><span class="line">Object.defineProperty(person, <span class="string">'age'</span>, &#123;</span><br><span class="line">  <span class="function"><span class="title">get</span></span> () &#123;</span><br><span class="line">    console.log(<span class="string">'age is getting'</span>)</span><br><span class="line">	  <span class="built_in">return</span> val</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="built_in">set</span> (newVal) &#123;</span><br><span class="line">    console.log(<span class="string">'age is setting'</span>)</span><br><span class="line">    val = newVal</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
 <p>我们通过Object.defineProperty方法，给person定义了一个age属性，这个属性在被读写时候都会被告知了，我们可以在控制台试一下。</p>
-
+<img src="/hexo.blog/2018/04/03/2018-04-03-response-principle/1.png">
 <p>可以看到我们已经可以监听这个人的年龄属性了。为了可以监听这个人的所有属性，我们可以写一个方法</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> ObserveProperty (obj, key, val) &#123;</span><br><span class="line">  Object.defineProperty(obj, key, &#123;</span><br><span class="line">    <span class="function"><span class="title">get</span></span> () &#123;</span><br><span class="line">      // 触发getter</span><br><span class="line">      console.log(`<span class="variable">$&#123;key&#125;</span> getting`)</span><br><span class="line">      <span class="built_in">return</span> val</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="built_in">set</span> (newVal) &#123;</span><br><span class="line">      // 触发setter</span><br><span class="line">      console.log(`<span class="variable">$&#123;key&#125;</span> setting`)</span><br><span class="line">      val = newVal</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> ObserveObj (obj) &#123;</span><br><span class="line">  const keys = Object.keys(obj)</span><br><span class="line">  keys.forEach((key) =&gt; &#123;</span><br><span class="line">    ObserveProperty(obj, key, obj[key])</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="built_in">return</span> obj</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="built_in">let</span> person = ObserveObj(&#123;</span><br><span class="line">  sex: <span class="string">'女'</span>,</span><br><span class="line">  age: 30</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <p>现在我们就可以知道这个30岁女人的一切情况了(奸笑。。。。)</p>
@@ -238,7 +241,7 @@
 <p>我们定义了一个watcher作为”监听器”,他监听了person的type属性。而person.type的值取决于person.age,我们就可以说person.age是person.type的依赖，我们称person.type为”计算属性”。</p>
 <p>现在我们可以尝试着构造这个监听器。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> onComputedUpdate (val) &#123;</span><br><span class="line">	console.log(`我的类型是: <span class="variable">$&#123;val&#125;</span>`)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> watcher (obj, key, fn) &#123;</span><br><span class="line">  Object.defineProperty(obj, key, &#123;</span><br><span class="line">    <span class="function"><span class="title">get</span></span> () &#123;</span><br><span class="line">      const val = fn()</span><br><span class="line">      onComputedUpdate(val)</span><br><span class="line">      <span class="built_in">return</span> val</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="function"><span class="title">set</span></span> () &#123;</span><br><span class="line">      console.error(<span class="string">'计算属性无法被赋值!'</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">watcher(person, <span class="string">'type'</span>, () =&gt; &#123;</span><br><span class="line">  <span class="built_in">return</span> person.age &gt; 18 ? <span class="string">'御姐'</span> : <span class="string">'萝莉'</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
 <p>现在我们就在控制台运行看下效果：</p>
-
+<img src="/hexo.blog/2018/04/03/2018-04-03-response-principle/2.png">
 <p>可以看到运行正常，那是不是就成功了呢？骚年，还是太年轻。我们可以看到是我们手动读取的type属性，而不是他主动告诉我们的。我们希望的是当age属性改变时，主动发起通知，那我们到底应该怎么做呢？（啪。。请听下回分解）</p>
 <h2 id="四、依赖收集"><a href="#四、依赖收集" class="headerlink" title="四、依赖收集"></a>四、依赖收集</h2><p>我们知道，当一个可观测对象的属性被读写时，会触发它的getter/setter方法。换个思路，如果我们可以在可观测对象的getter/setter里面，去执行监听器里面的onComputedUpdate方法，是不是就能够实现让对象主动发出通知的功能呢？</p>
 <p>由于监听器内的onComputedUpdate()方法需要接收回调函数的值作为参数，而可观测对象内并没有这个回调函数，所以我们需要借助一个第三方来帮助我们把监听器和可观测对象连接起来。</p>
@@ -356,7 +359,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/hexo.blog/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
